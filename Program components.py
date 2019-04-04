@@ -140,28 +140,6 @@ card1_dict_suit = (dict.get(suit_dictionary, card1_suit[3:4]))
 
 
 
-#%%
-test_hand2 = list(random.sample(deck2, 5))
-print(test_hand2)
-
-import pathlib
-from PIL import Image
-import io
-from pathlib import Path
-
-card_image_dir = Path('Deck_of_cards_with_parentheses')
-
-[x for x in p.iterdir() if x.is_dir()]
-
-a = [['KH'], ['7C'], ['2D'], ['6D'], ['2S']]
-
-b = str(a[0])
-print(b)
-
-test_ = Image.open('Deck_of_cards_with_parentheses/' + b + '.png')
-Image._show(test_)
-
-
 #%%Check your hand status
 
 
