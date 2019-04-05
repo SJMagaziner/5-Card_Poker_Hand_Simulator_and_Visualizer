@@ -1,3 +1,10 @@
-# Python_Final_Project
-####Here we see if my idea works 
-#
+# Python Final Project-Magaziner
+###Background
+#####Text
+###Elements Built
+#####Text
+###Putting it together
+#####Text
+###Statistics: True randomness?
+####Text
+
