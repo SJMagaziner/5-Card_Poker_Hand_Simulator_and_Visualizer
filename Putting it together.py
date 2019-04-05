@@ -55,11 +55,11 @@ def these_are_your_hands():
             # If they do, they must be four of a kind, if not, they must be full houses
     hand_rank = "High Card!"
     if len(set(hs)) == 1 and hv == [13, 12, 11, 10, 9]:
-        hand_rank = 'Royal Flush'
+        hand_rank = 'Royal Flush!'
     elif len(set(hs)) == 1 and (hv[0] == hv[4] + 4 or hv == [13, 4, 3, 2, 1]):
-        hand_rank = 'Straight Flush'
+        hand_rank = 'Straight Flush!'
     elif len(set(hv)) == 2 and (hv[0] == hv[3] or hv[1] == hv[4]):
-        hand_rank = 'Four of a Kind'
+        hand_rank = 'Four of a Kind!'
     elif len(set(hv)) == 2:
         hand_rank = 'Full House!'
     elif len(set(hs)) == 1:
@@ -78,7 +78,7 @@ def these_are_your_hands():
     current_time = datetime.datetime.now()
     time_diff = current_time - StartTime
     print(time_diff)
-    
+
     # This calls the png file associated with each card the player names
     card1_file = str(sorted_hand[0]) + '.png'
     card2_file = str(sorted_hand[1]) + '.png'
@@ -127,7 +127,7 @@ for i in range(how_many_hands):
 # 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades
 Suit_list = ['C', 'D', 'H', 'S']
 # Numeric corresponds to rank with 'T' for 10, 'J' for Jack, 'Q' for Queen, 'K' for King, and 'A' for Ace
-Value_list = ['2', '3', '4', '5', '6', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+Value_list = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
 
 # This dictionary is used to pull from the card call the values of each assigned and suit for use in hand determination
 rank_dictionary = {
@@ -162,5 +162,6 @@ deck2 = [[v + s] for s in Suit_list for v in Value_list]
 def draw_a_hand():
     random_hand = random.sample(deck2, 5)
     return random_hand
+
 
 
