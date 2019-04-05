@@ -9,30 +9,29 @@ how_many_hands = 5
 
 #Do you want images to appear for each hand (if yes, input 1, if false input 0?
 ####TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
-make_images_appear = False
-
+make_images_appear = True
 
 def these_are_your_hands():
     '''This function will randomly assign a given number of 5 card hands and generates images of them if chosen.
     In addition, it will determine the rank of each hand generated.'''
-    # This draws one's unique 5-card hand
+    # This draws one's unique 5-card hand and sorts it, grouping like cards
     random_hand = draw_a_hand()
-    th = random_hand
-    print(th)
+    sorted_hand = sorted(random_hand)
+    print(sorted_hand)
 
     # Looks up rank values in dictionary (e.g. cdv1 is card 1's rank; A corresponds to 13, King to 12, etc.)
-    cdv1 = rank_dictionary[(str((th[0]))[2:3])]
-    cdv2 = rank_dictionary[(str((th[1]))[2:3])]
-    cdv3 = rank_dictionary[(str((th[2]))[2:3])]
-    cdv4 = rank_dictionary[(str((th[3]))[2:3])]
-    cdv5 = rank_dictionary[str((th[4]))[2:3]]
+    cdv1 = rank_dictionary[(str((sorted_hand[0]))[2:3])]
+    cdv2 = rank_dictionary[(str((sorted_hand[1]))[2:3])]
+    cdv3 = rank_dictionary[(str((sorted_hand[2]))[2:3])]
+    cdv4 = rank_dictionary[(str((sorted_hand[3]))[2:3])]
+    cdv5 = rank_dictionary[str((sorted_hand[4]))[2:3]]
 
     # Looks up suit values in dictionary (e.g. cds1 is card 1's suit; Spades corresponds to 4, etc.)
-    cds1 = suit_dictionary[(str((th[0]))[3:4])]
-    cds2 = suit_dictionary[(str((th[1]))[3:4])]
-    cds3 = suit_dictionary[(str((th[2]))[3:4])]
-    cds4 = suit_dictionary[(str((th[3]))[3:4])]
-    cds5 = suit_dictionary[str((th[4]))[3:4]]
+    cds1 = suit_dictionary[(str((sorted_hand[0]))[3:4])]
+    cds2 = suit_dictionary[(str((sorted_hand[1]))[3:4])]
+    cds3 = suit_dictionary[(str((sorted_hand[2]))[3:4])]
+    cds4 = suit_dictionary[(str((sorted_hand[3]))[3:4])]
+    cds5 = suit_dictionary[str((sorted_hand[4]))[3:4]]
 
     # Arranges the called values into a list of ints; the .sort function sorts in descending numerical order
         # E.g. a hand of K,5,A,T,J is sorted into [A,K,J,T,5]; same applies for suits
@@ -58,7 +57,7 @@ def these_are_your_hands():
         hand_rank = 'Full House!'
     elif len(set(hs)) == 1:
         hand_rank = 'Flush!'
-    elif hv[0] == hv[4] + 4 or hv == [13, 4, 3, 2, 1]:
+    elif (hv[0] == hv[4] + 4 and hv[0]!=hv[1] and hv[3]!=hv[4]) or hv == [13, 4, 3, 2, 1]:
         hand_rank = 'Straight!'
     elif len(set(hv)) == 3 and (hv[0] == hv[2] or hv[2] == hv[4]):
         hand_rank = 'Three of a Kind!'
@@ -69,11 +68,11 @@ def these_are_your_hands():
     print(hand_rank)
 
     # This calls the png file associated with each card the player names
-    card1_file = str(random_hand[0]) + '.png'
-    card2_file = str(random_hand[1]) + '.png'
-    card3_file = str(random_hand[2]) + '.png'
-    card4_file = str(random_hand[3]) + '.png'
-    card5_file = str(random_hand[4]) + '.png'
+    card1_file = str(sorted_hand[0]) + '.png'
+    card2_file = str(sorted_hand[1]) + '.png'
+    card3_file = str(sorted_hand[2]) + '.png'
+    card4_file = str(sorted_hand[3]) + '.png'
+    card5_file = str(sorted_hand[4]) + '.png'
     # This employs pillow to read the images to later exract data
     card1 = Image.open('Deck_of_cards_with_parentheses/' + card1_file)
     card2 = Image.open('Deck_of_cards_with_parentheses/' + card2_file)
