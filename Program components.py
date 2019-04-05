@@ -142,7 +142,8 @@ card1_dict_suit = suit_dictionary[card1_value]
 print(card1_dict_value)
 
 #%% Hand rankings
-th = [['AH'], ['2S'], ['9D'], ['KC'], ['TD']]
+th = list(random.sample(deck2, 5))
+print(th)
 
 card1_value = (str((th[0]))[2:3])
 card1_suit = (str((th[0]))[3:4])
@@ -176,19 +177,19 @@ hv.sort(reverse=True)
 def flush_check():
     if len(set(hs)) == 1:
         return True, print('Flush!')
-    if len(set(hs)) == 2:
+    elif len(set(hs)) == 2:
         print('four to a Flush!')
-    if len(set(hs)) == 3:
+    elif len(set(hs)) == 3:
         print('three to a Flush!')
     else:
         return False
 
 def straight_check():
     if hv[0]==hv[4]+4 or hv == [13, 4, 3, 2, 1]:
-        return True, print('Straight!'), straight_flush_counter==+1
-    if hv[0] == hv[3]+3 or hv[1] == hv[4]+3:
+        return True, print('Straight!')
+    elif hv[0] == hv[3]+3 or hv[1] == hv[4]+3:
         print('four to a Straight!')
-    if hv[0] == hv[2]+2 or hv[2] == hv[4]+2 or hv[1] == hv[3]+2:
+    elif hv[0] == hv[2]+2 or hv[2] == hv[4]+2 or hv[1] == hv[3]+2:
         print('three to a Straight!')
     else:
         return False
@@ -208,7 +209,7 @@ def pair_check():
 def two_pair_and_three_of_a_kind_check():
     if len(set(hv)) == 3 and (hv[0] == hv[2] or hv[2] == hv[4]):
         return True, print('Three of a Kind!')
-    if len(set(hv)) == 3:
+    elif len(set(hv)) == 3:
         return True, print('Two Pair!')
     else:
         return False
