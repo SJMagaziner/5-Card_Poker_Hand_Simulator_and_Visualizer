@@ -31,6 +31,7 @@ suit_dictionary = {
         'C': 1
 
         }
+
 #%%  Making a deck using lists instead of new class functions
 deck2 = [[v + s] for s in Suit_list for v in Value_list]
 print(deck2)
@@ -130,14 +131,70 @@ print(test_hand2)
 card1_value = (str((test_hand2[0]))[2:3])
 card1_suit = (str((test_hand2[0]))[3:4])
 
+print(card1_value)
+
 # Operation employs the previous method and looks up pulled suit and value info against a dictionary
 # assigning an integer to each for use in hand rankings
 
-card1_dict_value = (dict.get(rank_dictionary, card1_value[2:3]))
-card1_dict_suit = (dict.get(suit_dictionary, card1_suit[3:4]))
+card1_dict_value = rank_dictionary[card1_value]
+card1_dict_suit = suit_dictionary[card1_value]
+
+print(card1_dict_value)
 
 #%% Hand rankings
+th = [['5D'], ['3D'], ['6D'], ['KD'], ['AH']]
 
+card1_value = (str((th[0]))[2:3])
+card1_suit = (str((th[0]))[3:4])
+card2_value = (str((th[1]))[2:3])
+card2_suit = (str((th[1]))[3:4])
+card3_value = (str((th[2]))[2:3])
+card3_suit = (str((th[2]))[3:4])
+card4_value = (str((th[3]))[2:3])
+card4_suit = (str((th[3]))[3:4])
+card5_value = (str((th[4]))[2:3])
+card5_suit = (str((th[4]))[3:4])
+
+
+#Dictionary calls for ranks and suits
+cdv1 = rank_dictionary[card1_value]
+cds1 = suit_dictionary[card1_suit]
+cdv2 = rank_dictionary[card2_value]
+cds2 = suit_dictionary[card2_suit]
+cdv3 = rank_dictionary[card3_value]
+cds3 = suit_dictionary[card3_suit]
+cdv4 = rank_dictionary[card4_value]
+cds4 = suit_dictionary[card4_suit]
+cdv5 = rank_dictionary[card5_value]
+cds5 = suit_dictionary[card5_suit]
+
+hs = [cds1, cds2, cds3, cds4, cds5]
+hs.sort(reverse=True)
+hv = [cdv1, cdv2, cdv3, cdv4, cdv5]
+hv.sort(reverse=True)
+
+print(hs)
+print(hv)
+
+def flush_check():
+    if len(set(hs)) == 1:
+        return True, print('Flush')
+    elif len(set(hs)) == 2:
+        print('four to a Flush')
+    elif len(set(hs)) == 3:
+        print('three to a Flush')
+    else:
+        return False
+
+def straight_check():
+    if hv[0] == hv[4]+4 or hv == [13, 4, 3, 2, 1]:
+        return True, print('Straight')
+    elif hv[0] == hv[3]+3 or hv[1] == hv[4]+3:
+        print('four to a Straight')
+    elif hv[0] == hv[2]+2 or hv[2] == hv[4]+2:
+        print('three to a Straight')
+
+straight_check()
 
 
 #%%Check your hand status
@@ -151,4 +208,3 @@ card1_dict_suit = (dict.get(suit_dictionary, card1_suit[3:4]))
 ### 2) Build decision tree for player decisions in Jacks or Better
 ###
 ### 3)USe pandas to build/organize info on hands in excel sheet before shuttling t
-tthtwefwdfwefwe
