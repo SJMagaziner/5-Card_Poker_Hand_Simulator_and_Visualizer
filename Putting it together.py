@@ -5,11 +5,11 @@ from PIL import Image
 #%% Auto hand-drawer and visualizer
 
 # Enter the number of hands you desire to generate
-how_many_hands = 100
+how_many_hands = 10
 
 #Do you want images to appear for each hand (if yes, input 1, if false input 0?
 ####TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
-make_images_appear = True
+make_images_appear = False
 
 def these_are_your_hands():
     '''This function will randomly assign a given number of 5 card hands and generates images of them if chosen.
@@ -34,7 +34,7 @@ def these_are_your_hands():
     cds5 = suit_dictionary[str((sorted_hand[4]))[3:4]]
 
     # Arranges the called values into a list of ints; the .sort function sorts in descending numerical order
-        # E.g. a hand of K,5,A,T,J is sorted into [A,K,J,T,5]; same applies for suits
+        # E.g. a hand of [K,5,A,T,J] is sorted into [A,K,J,T,5]; same applies for suits
     # For brevity, hs and hv stand for "Hand suits" and "Hand values", respectively
     hs = [cds1, cds2, cds3, cds4, cds5]
     hs.sort(reverse=True)
@@ -46,10 +46,12 @@ def these_are_your_hands():
     # Since ranks are numbered, other relations appear such as straights always possessing a range of 4
     # Exceptions exist and are noted/coded as appropriate
         # E.g. a hand of len(set(hv)) == 2 can be either [A,A,A,K,K] or [A,A,A,A,K]
-        # These hands can be further differentiated by whether the 1st and 4th or 2nd and 5th cards have =values
-        # If they do, they must be four of a kind, if not, they must be full houses
+            # These hands can be further differentiated by whether the 1st and 4th or 2nd and 5th cards have =values
+            # If they do, they must be four of a kind, if not, they must be full houses
     hand_rank = "High Card!"
-    if len(set(hs)) == 1 and (hv[0] == hv[4] + 4 or hv == [13, 4, 3, 2, 1]):
+    if len(set(hs)) == 1 and hv == [13, 12, 11, 10, 9]:
+        hand_rank = 'Royal Flush'
+    elif len(set(hs)) == 1 and (hv[0] == hv[4] + 4 or hv == [13, 4, 3, 2, 1]):
         hand_rank = 'Straight Flush'
     elif len(set(hv)) == 2 and (hv[0] == hv[3] or hv[1] == hv[4]):
         hand_rank = 'Four of a Kind'
