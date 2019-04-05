@@ -1,15 +1,19 @@
 #%% Imports
 import random
 from PIL import Image
+import datetime
 
 #%% Auto hand-drawer and visualizer
 
 # Enter the number of hands you desire to generate
-how_many_hands = 10
+how_many_hands = 1000
 
 #Do you want images to appear for each hand (if yes, input 1, if false input 0?
 ####TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
 make_images_appear = False
+
+#Current time:
+StartTime = datetime.datetime.now()
 
 def these_are_your_hands():
     '''This function will randomly assign a given number of 5 card hands and generates images of them if chosen.
@@ -18,6 +22,7 @@ def these_are_your_hands():
     random_hand = draw_a_hand()
     sorted_hand = sorted(random_hand)
     print(sorted_hand)
+
 
     # Looks up rank values in dictionary (e.g. cdv1 is card 1's rank; A corresponds to 13, King to 12, etc.)
     cdv1 = rank_dictionary[(str((sorted_hand[0]))[2:3])]
@@ -69,6 +74,11 @@ def these_are_your_hands():
         hand_rank = 'Pair!'
     print(hand_rank)
 
+    # Creates a time stamp for each hand iteration
+    current_time = datetime.datetime.now()
+    time_diff = current_time - StartTime
+    print(time_diff)
+    
     # This calls the png file associated with each card the player names
     card1_file = str(sorted_hand[0]) + '.png'
     card2_file = str(sorted_hand[1]) + '.png'

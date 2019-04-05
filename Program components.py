@@ -238,6 +238,16 @@ full_house_check()
 two_pair_and_three_of_a_kind_check()
 pair_check()
 high_card_check()
+
+#%% Datetime
+#making a display
+import datetime
+def time_display():
+    current_time = datetime.datetime.now()
+    time_diff = current_time - StartTime
+    print(time_diff)
+
+
 #%%Check your hand status
 
 
