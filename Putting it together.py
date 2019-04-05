@@ -59,7 +59,7 @@ def these_are_your_hands():
         hand_rank = 'Full House!'
     elif len(set(hs)) == 1:
         hand_rank = 'Flush!'
-    elif (hv[0] == hv[4] + 4 and hv[0]!=hv[1] and hv[3]!=hv[4]) or hv == [13, 4, 3, 2, 1]:
+    elif (hv[0] == hv[4] + 4 and len(set(hv)) == 5) or hv == [13, 4, 3, 2, 1]:
         hand_rank = 'Straight!'
     elif len(set(hv)) == 3 and (hv[0] == hv[2] or hv[2] == hv[4]):
         hand_rank = 'Three of a Kind!'

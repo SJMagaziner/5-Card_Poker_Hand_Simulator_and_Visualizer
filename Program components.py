@@ -174,6 +174,12 @@ hs.sort(reverse=True)
 hv = [cdv1, cdv2, cdv3, cdv4, cdv5]
 hv.sort(reverse=True)
 
+def royal_check():
+    if len(set(hs)) == 1 and hv == [13, 12, 11, 10, 9]:
+        return False, print('Royal Flush')
+    else:
+        return False
+
 def flush_check():
     if len(set(hs)) == 1:
         return True, print('Flush!')
