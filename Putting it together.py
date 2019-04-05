@@ -5,7 +5,7 @@ from PIL import Image
 #%% Auto hand-drawer and visualizer
 
 # Enter the number of hands you desire to generate
-how_many_hands = 5
+how_many_hands = 100
 
 #Do you want images to appear for each hand (if yes, input 1, if false input 0?
 ####TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
