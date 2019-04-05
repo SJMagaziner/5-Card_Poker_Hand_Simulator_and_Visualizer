@@ -188,9 +188,9 @@ def straight_check():
     if hv[0]==hv[4]+4 or hv == [13, 4, 3, 2, 1]:
         return True, print('Straight!')
     elif hv[0] == hv[3]+3 or hv[1] == hv[4]+3:
-        print('four to a Straight!')
+        return True, print('four to a Straight!')
     elif hv[0] == hv[2]+2 or hv[2] == hv[4]+2 or hv[1] == hv[3]+2:
-        print('three to a Straight!')
+        return True, print('three to a Straight!')
     else:
         return False
 
@@ -238,8 +238,8 @@ high_card_check()
 
 #####TO DO!!!!!!!!!!!!!!
 
-### 1) Enter hand classifications
-###    counter system in a while loop?
+### 1) Enter hand classifications X
+###    counter system in a while loop? X
 ### 2) Build decision tree for player decisions in Jacks or Better
 ###
 ### 3)USe pandas to build/organize info on hands in excel sheet before shuttling t
