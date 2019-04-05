@@ -142,7 +142,7 @@ card1_dict_suit = suit_dictionary[card1_value]
 print(card1_dict_value)
 
 #%% Hand rankings
-th = [['5D'], ['3D'], ['6D'], ['KD'], ['AH']]
+th = [['AH'], ['2S'], ['9D'], ['KC'], ['TD']]
 
 card1_value = (str((th[0]))[2:3])
 card1_suit = (str((th[0]))[3:4])
@@ -173,30 +173,64 @@ hs.sort(reverse=True)
 hv = [cdv1, cdv2, cdv3, cdv4, cdv5]
 hv.sort(reverse=True)
 
-print(hs)
-print(hv)
-
 def flush_check():
     if len(set(hs)) == 1:
-        return True, print('Flush')
-    elif len(set(hs)) == 2:
-        print('four to a Flush')
-    elif len(set(hs)) == 3:
-        print('three to a Flush')
+        return True, print('Flush!')
+    if len(set(hs)) == 2:
+        print('four to a Flush!')
+    if len(set(hs)) == 3:
+        print('three to a Flush!')
     else:
         return False
 
 def straight_check():
-    if hv[0] == hv[4]+4 or hv == [13, 4, 3, 2, 1]:
-        return True, print('Straight')
-    elif hv[0] == hv[3]+3 or hv[1] == hv[4]+3:
-        print('four to a Straight')
-    elif hv[0] == hv[2]+2 or hv[2] == hv[4]+2:
-        print('three to a Straight')
+    if hv[0]==hv[4]+4 or hv == [13, 4, 3, 2, 1]:
+        return True, print('Straight!'), straight_flush_counter==+1
+    if hv[0] == hv[3]+3 or hv[1] == hv[4]+3:
+        print('four to a Straight!')
+    if hv[0] == hv[2]+2 or hv[2] == hv[4]+2 or hv[1] == hv[3]+2:
+        print('three to a Straight!')
+    else:
+        return False
 
+def straight_flush_check():
+    if flush_check()[0] and straight_check()[0] == True:
+        return True, print('Straight Flush!')
+    else:
+        return False
+
+def pair_check():
+    if len(set(hv)) == 4:
+        return True, print('Pair!')
+    else:
+        return False
+
+def two_pair_and_three_of_a_kind_check():
+    if len(set(hv)) == 3 and (hv[0] == hv[2] or hv[2] == hv[4]):
+        return True, print('Three of a Kind!')
+    if len(set(hv)) == 3:
+        return True, print('Two Pair!')
+    else:
+        return False
+
+def full_house_check():
+    if len(set(hv)) == 2:
+        return True, print('Full House!')
+    else:
+        return False
+
+def high_card_check():
+    if full_house_check == False and two_pair_and_three_of_a_kind_check() == False and pair_check == False:
+        return True, print('High Card!')
+    else:
+        return False
+
+flush_check()
 straight_check()
-
-
+full_house_check()
+two_pair_and_three_of_a_kind_check()
+pair_check()
+high_card_check()
 #%%Check your hand status
 
 
