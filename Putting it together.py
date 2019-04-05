@@ -92,7 +92,7 @@ def these_are_your_hands():
     card4 = Image.open('Deck_of_cards_with_parentheses/' + card4_file)
     card5 = Image.open('Deck_of_cards_with_parentheses/' + card5_file)
 
-    # the X.size module extracts the pixel height and width of each image; the later functon defines the new image size
+    # the X.size module extracts the pixel height and width of each image; the later function defines the new image size
     (width1, height1) = card1.size
     (width2, height2) = card2.size
     (width3, height3) = card3.size
