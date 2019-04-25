@@ -48,7 +48,7 @@ def draw_a_hand():
 #%% Auto hand-drawer, visualizer, and data compiler
 
 # Enter the number of hands you desire to generate
-how_many_hands = 1000
+how_many_hands = 1000000
 
 #Do you want images to appear for each hand (if yes, input 1, if false input 0?
 ####TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
@@ -173,7 +173,7 @@ for i in range(how_many_hands):
 
 # Lastly, this will store the dataframe as an excel sheet entitled 'Poker Statistics'
 # While the variable final_df will be the appropriate, complete dataframe, this ensures the data is saved
-with pd.ExcelWriter('Poker Statistics 1000.xlsx') as writer:
+with pd.ExcelWriter('Poker Statistics 1mil.xlsx') as writer:
     final_df.to_excel(writer, sheet_name='Sheet1')
 print(final_df)
 
@@ -184,5 +184,14 @@ Rank_counts = Counter(final_df['Hand Rank'])
 df = pd.DataFrame.from_dict(Rank_counts, orient='index')
 
 df.plot(kind='bar')
+plt.show()
+
+#%%
+
+Card_counts = Counter(final_df['Card 5'])
+
+df2 = pd.DataFrame.from_dict(Card_counts, orient='index')
+
+df2.plot(kind='bar')
 plt.show()
 
