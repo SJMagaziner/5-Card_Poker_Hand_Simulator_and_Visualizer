@@ -3,9 +3,10 @@ import random
 from PIL import Image
 import datetime
 import pandas as pd
-from openpyxl import load_workbook
 from collections import Counter
 import matplotlib.pyplot as plt
+import plotly as py
+
 #%% Global variables and definitions
 
 # 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades
@@ -119,14 +120,14 @@ def make_poker_hand_images():
 #%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
 
 # Enter the number of hands you desire to generate
-how_many_hands = 5
+how_many_hands = 100000
 
 # Do you want images to appear for each hand (if yes, input 1, if false input 0?
 #### TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
-make_images_appear = 1
+make_images_appear = 0
 
 # Generates empty pandas dataframe onto which we will append info from each hand
-final_df = pd.DataFrame()
+poker_hands_df = pd.DataFrame()
 
 # Hand counter
 hand_counter = 0
@@ -168,7 +169,6 @@ for i in range(how_many_hands):
 
     # Defines hand ranks; see function documentation for detailed explanation
     hand_rank = what_is_the_hand_rank()
-    print(hand_rank)
 
     # Creates a time stamp for each hand iteration
     current_time = datetime.datetime.now()
@@ -185,7 +185,7 @@ for i in range(how_many_hands):
                              'Time to completion': str(time_diff)})
 
     # This will append the most recently drawn hand to the empty/existing pandas dataframe
-    final_df = final_df.append(add_hand)
+    poker_hands_df = poker_hands_df.append(add_hand)
 
     # This argument will return an image for each hand drawn (if noted by player)
     # It can be used to stitch any images together, just change pathways and names of the function
@@ -195,25 +195,44 @@ for i in range(how_many_hands):
 
 # Lastly, this will store the dataframe as an excel sheet entitled 'Poker Statistics'
 # While the variable final_df will be the appropriate, complete dataframe, this ensures the data is saved
-with pd.ExcelWriter('Poker Statistics 1mil.xlsx') as writer:
-    final_df.to_excel(writer, sheet_name='Sheet1')
-print(final_df)
+with pd.ExcelWriter('Poker Hand Statistics 100k.xlsx') as writer:
+    poker_hands_df.to_excel(writer, sheet_name='Sheet1')
+print(poker_hands_df)
 
-#%% Working with the data
+#%% Working with the data (hand ranks)
 
-Rank_counts = Counter(final_df['Hand Rank'])
+Rank_counts = Counter(poker_hands_df['Hand Rank'])
 
-df = pd.DataFrame.from_dict(Rank_counts, orient='index')
-
-df.plot(kind='bar')
+rc_df = pd.DataFrame.from_dict(Rank_counts, orient='index')
+rc_df
+rc_df.plot(kind='bar')
 plt.show()
 
-#%%
 
-Card_counts = Counter(final_df['Card 5'])
+#%% Working with the data (card occurrence)
+import plotly as py
+import plotly.graph_objs as go
+import seaborn as sns
 
-df2 = pd.DataFrame.from_dict(Card_counts, orient='index')
+c1c = Counter(poker_hands_df['Card 1'])
+c2c = Counter(poker_hands_df['Card 2'])
+c3c = Counter(poker_hands_df['Card 3'])
+c4c = Counter(poker_hands_df['Card 4'])
+c5c = Counter(poker_hands_df['Card 5'])
 
-df2.plot(kind='bar')
+Card_counts = c1c+c2c+c3c+c4c+c5c
+
+cc_total_df = pd.DataFrame.from_dict(Card_counts, orient='index').sort_index()
+
+cc_total_df.plot(kind='bar', legend=False)
+plt.ylabel('Number of times drawn')
+plt.xlabel('Card')
+plt.title('Card Occurrence in a 52-card deck')
+
 plt.show()
 
+#%% Card correlations
+
+test1 = poker_hands_df.drop(['Hand Rank', 'Time to completion'], axis=1)
+test1
+test1.corr('pearson')
