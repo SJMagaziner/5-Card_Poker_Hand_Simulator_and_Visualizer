@@ -1,15 +1,6 @@
-import xlwt as xcell
+
 import pandas as pd
 
-#%%
-shell = [['2D'], ['3C'], ['3D'], ['TD'], ['TS']]
-hand_rank = 'shell'
-hand_df = pd.DataFrame({'Hand Rank': hand_rank,
-                        'Card 1': shell[0],
-                        'Card 2': shell[1],
-                        'Card 3': shell[2],
-                        'Card 4': shell[3],
-                        'Card 5': shell[4]})
 #%% Methods for exporting to an Excel sheet
 
 # This will append to an existing excel non-specifically

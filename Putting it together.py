@@ -5,14 +5,55 @@ import datetime
 import pandas as pd
 from openpyxl import load_workbook
 
-#%% Auto hand-drawer and visualizer
+#%% Global variables and definitions
+
+# 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades
+Suit_list = ['C', 'D', 'H', 'S']
+# Numeric corresponds to rank with 'T' for 10, 'J' for Jack, 'Q' for Queen, 'K' for King, and 'A' for Ace
+Value_list = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+
+# Making a deck using lists instead of new class functions
+deck2 = [[v + s] for s in Suit_list for v in Value_list]
+
+# This dictionary is used to pull from the card call the values of each assigned and suit for use in hand determination
+rank_dictionary = {
+        '2': 1,
+        '3': 2,
+        '4': 3,
+        '5': 4,
+        '6': 5,
+        '7': 6,
+        '8': 7,
+        '9': 8,
+        'T': 9,
+        'J': 10,
+        'Q': 11,
+        'K': 12,
+        'A': 13
+        }
+suit_dictionary = {
+        'S': 4,
+        'H': 3,
+        'D': 2,
+        'C': 1
+        }
+
+# Draw a random hand
+#Use this function to draw a random 5 card hand from the deck
+def draw_a_hand():
+    random_hand = random.sample(deck2, 5)
+    return random_hand
+
+#%% Auto hand-drawer, visualizer, and data compiler
 
 # Enter the number of hands you desire to generate
-how_many_hands = 100
+how_many_hands = 10
+
 #Do you want images to appear for each hand (if yes, input 1, if false input 0?
 ####TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
 make_images_appear = 0
 
+#Generates empty pandas dataframe onto which we will append info from each hand
 final_df = pd.DataFrame()
 
 #Current time:
@@ -51,8 +92,9 @@ for i in range(how_many_hands):
     # Since ranks are numbered, other relations appear such as straights always possessing a range of 4
     # Exceptions exist and are noted/coded as appropriate
         # E.g. a hand of len(set(hv)) == 2 can be either [A,A,A,K,K] or [A,A,A,A,K]
-            # These hands can be further differentiated by whether the 1st and 4th or 2nd and 5th cards have =values
+            # These hands can be further differentiated by whether the 1st and 4th or 2nd and 5th cards have == values
             # If they do, they must be four of a kind, if not, they must be full houses
+    # The default rank is a high card; Elif statements alter this variable if the proper conditions are met
     hand_rank = "High Card!"
     if len(set(hs)) == 1 and hv == [13, 12, 11, 10, 9]:
         hand_rank = 'Royal Flush!'
@@ -79,26 +121,27 @@ for i in range(how_many_hands):
     time_diff = current_time - StartTime
     print(time_diff)
 
-    # This calls the png file associated with each card the player names
+    # This calls the png file associated with each card the player draws
     card1_file = str(sorted_hand[0]) + '.png'
     card2_file = str(sorted_hand[1]) + '.png'
     card3_file = str(sorted_hand[2]) + '.png'
     card4_file = str(sorted_hand[3]) + '.png'
     card5_file = str(sorted_hand[4]) + '.png'
-    # This employs pillow to read the images to later exract data
+    # This employs the package 'pillow' to read the images to later extract data
     card1 = Image.open('Deck_of_cards_with_parentheses/' + card1_file)
     card2 = Image.open('Deck_of_cards_with_parentheses/' + card2_file)
     card3 = Image.open('Deck_of_cards_with_parentheses/' + card3_file)
     card4 = Image.open('Deck_of_cards_with_parentheses/' + card4_file)
     card5 = Image.open('Deck_of_cards_with_parentheses/' + card5_file)
 
-    # the X.size module extracts the pixel height and width of each image; the later function defines the new image size
+    # the X.size module extracts the pixel height and width of each image
     (width1, height1) = card1.size
     (width2, height2) = card2.size
     (width3, height3) = card3.size
     (width4, height4) = card4.size
     (width5, height5) = card5.size
 
+    # This function defines the new composite image size (i.e. a combo of 5 cards)
     result_width = width1 + width2 + width3 + width4 + width5
     result_height = max(height1, height2, height3, height4, height5)
 
@@ -111,6 +154,11 @@ for i in range(how_many_hands):
     hand.paste(im=card4, box=(width1 + width2 + width3, 0))
     hand.paste(im=card5, box=(width1 + width2 + width3 + width4, 0))
 
+    # This argument will return an image for each hand drawn (if noted by player)
+    if make_images_appear == 1:
+        Image._show(hand)
+
+    # This generates a pandas dataframe for the most recent hand drawn
     add_hand = pd.DataFrame({'Hand Rank': hand_rank,
                              'Card 1': sorted_hand[0],
                              'Card 2': sorted_hand[1],
@@ -122,54 +170,12 @@ for i in range(how_many_hands):
     # This will append the most recently drawn hand to the empty/existing pandas dataframe
     final_df = final_df.append(add_hand)
 
-    # This argument will return an image for each hand drawn
-    if make_images_appear == 1:
-        Image._show(hand)
-
+# Lastly, this will store the dataframe as an excel sheet entitled 'Poker Statistics'
+# While the variable final_df will be the appropriate, complete dataframe, this ensures the data is saved
 with pd.ExcelWriter('Poker Statistics.xlsx') as writer:
     final_df.to_excel(writer, sheet_name='Sheet1')
 print(final_df)
 
-#%% Base definitions:
-
-# 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades
-Suit_list = ['C', 'D', 'H', 'S']
-# Numeric corresponds to rank with 'T' for 10, 'J' for Jack, 'Q' for Queen, 'K' for King, and 'A' for Ace
-Value_list = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
-
-# This dictionary is used to pull from the card call the values of each assigned and suit for use in hand determination
-rank_dictionary = {
-        '2': 1,
-        '3': 2,
-        '4': 3,
-        '5': 4,
-        '6': 5,
-        '7': 6,
-        '8': 7,
-        '9': 8,
-        'T': 9,
-        'J': 10,
-        'Q': 11,
-        'K': 12,
-        'A': 13
-        }
-suit_dictionary = {
-        'S': 4,
-        'H': 3,
-        'D': 2,
-        'C': 1
-
-        }
-
-# Making a deck using lists instead of new class functions
-deck2 = [[v + s] for s in Suit_list for v in Value_list]
-
-# Draw a random hand
-
-#Use this function to draw a random 5 card hand from the deck
-def draw_a_hand():
-    random_hand = random.sample(deck2, 5)
-    return random_hand
 
 
 
