@@ -2,27 +2,27 @@
 import random
 from PIL import Image
 import datetime
+import pandas as pd
+from openpyxl import load_workbook
 
 #%% Auto hand-drawer and visualizer
 
 # Enter the number of hands you desire to generate
-how_many_hands = 10
-
+how_many_hands = 100
 #Do you want images to appear for each hand (if yes, input 1, if false input 0?
 ####TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
-make_images_appear = False
+make_images_appear = 0
+
+final_df = pd.DataFrame()
 
 #Current time:
 StartTime = datetime.datetime.now()
 
-def these_are_your_hands():
-    '''This function will randomly assign a given number of 5 card hands and generates images of them if chosen.
-    In addition, it will determine the rank of each hand generated.'''
+for i in range(how_many_hands):
     # This draws one's unique 5-card hand and sorts it, grouping like cards
     random_hand = draw_a_hand()
     sorted_hand = sorted(random_hand)
     print(sorted_hand)
-
 
     # Looks up rank values in dictionary (e.g. cdv1 is card 1's rank; A corresponds to 13, King to 12, etc.)
     cdv1 = rank_dictionary[(str((sorted_hand[0]))[2:3])]
@@ -111,16 +111,24 @@ def these_are_your_hands():
     hand.paste(im=card4, box=(width1 + width2 + width3, 0))
     hand.paste(im=card5, box=(width1 + width2 + width3 + width4, 0))
 
+    add_hand = pd.DataFrame({'Hand Rank': hand_rank,
+                             'Card 1': sorted_hand[0],
+                             'Card 2': sorted_hand[1],
+                             'Card 3': sorted_hand[2],
+                             'Card 4': sorted_hand[3],
+                             'Card 5': sorted_hand[4],
+                             'Time to completion': time_diff})
+
+    # This will append the most recently drawn hand to the empty/existing pandas dataframe
+    final_df = final_df.append(add_hand)
+
+    # This argument will return an image for each hand drawn
     if make_images_appear == 1:
-        return Image._show(hand)
-    elif make_images_appear == 0:
-        return
-    else:
-        return print('Please make a selection for images.')
+        Image._show(hand)
 
-
-for i in range(how_many_hands):
-    these_are_your_hands()
+with pd.ExcelWriter('Poker Statistics.xlsx') as writer:
+    final_df.to_excel(writer, sheet_name='Sheet1')
+print(final_df)
 
 #%% Base definitions:
 
