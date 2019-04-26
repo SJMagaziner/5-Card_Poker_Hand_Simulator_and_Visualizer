@@ -119,7 +119,7 @@ def make_poker_hand_images():
 #%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
 
 # Enter the number of hands you desire to generate
-how_many_hands = 10000
+how_many_hands = 100000
 
 # Do you want images to appear for each hand (if yes, input 1, if false input 0?
 #### TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
@@ -142,7 +142,6 @@ for i in range(how_many_hands):
     # This draws one's unique 5-card hand and sorts it, grouping like cards
     random_hand = draw_a_hand()
     sorted_hand = sorted(random_hand)
-    print(sorted_hand)
 
     # Looks up rank values in dictionary (e.g. cdv1 is card 1's rank; A corresponds to 13, King to 12, etc.)
     cdv1 = rank_dictionary[(str((sorted_hand[0]))[2:3])]
@@ -193,8 +192,8 @@ for i in range(how_many_hands):
         make_poker_hand_images()
 
 # Lastly, this will store the dataframe as an excel sheet entitled 'Poker Statistics'
-# While the variable final_df will be the appropriate, complete dataframe, this ensures the data is saved
-with pd.ExcelWriter('Poker Hand Statistics 10k.xlsx') as writer:
+# While the variable poker_hands_df will be the appropriate, complete dataframe, this ensures the data is saved
+with pd.ExcelWriter('Poker Hand Statistics 1mil.xlsx') as writer:
     poker_hands_df.to_excel(writer, sheet_name='Sheet1')
 print(poker_hands_df)
 
@@ -212,37 +211,79 @@ expected_rc_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='
 rc_df['Expected'] = expected_rc_df.loc[:,'Expected']
 
 # Generates a bar plot comparing simulated vs. expected hand rank outcomes
-rc_df.plot(kind='bar')
+rc_graph = rc_df.plot(kind='bar')
+plt.Axes.tick_params(self=rc_graph, axis='x', labelsize=10, labelrotation=45)
+plt.ylabel('Number of times drawn', fontsize=12)
+plt.xlabel('Rank', fontsize=12)
+plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.show()
 
+#%% Zoomed in look at hand ranks (Straight to Royal)
+# Counts resultant hand ranks counts (rc)
+Rank_counts = Counter(poker_hands_df['Hand Rank'])
+
+# 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',
+# 3) and re-orders the index in ascending hand rank for use in later plotting applications
+rc_df = pd.DataFrame.from_dict(Rank_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).reindex(['Straight', 'Flush', 'Full House', 'Four of a Kind', 'Straight Flush', 'Royal Flush'])
+
+# Calls upon an excel sheet containing the expected hand rank outcomes according to statistics and adds it to rc_df
+expected_rc_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Ranks')
+rc_df['Expected'] = expected_rc_df.loc['Straight':'Royal Flush','Expected']
+
+# Generates a bar plot comparing simulated vs. expected hand rank outcomes
+rc_graph = rc_df.plot(kind='bar')
+plt.Axes.tick_params(self=rc_graph, axis='x', labelsize=10, labelrotation=45)
+plt.ylabel('Number of times drawn', fontsize=12)
+plt.xlabel('Rank', fontsize=12)
+plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
+plt.show()
+
+#%% Zoomed in look at hand ranks (Four of a Kind to Royal)
+# Counts resultant hand ranks counts (rc)
+Rank_counts = Counter(poker_hands_df['Hand Rank'])
+
+# 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',
+# 3) and re-orders the index in ascending hand rank for use in later plotting applications
+rc_df = pd.DataFrame.from_dict(Rank_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).reindex(['Four of a Kind', 'Straight Flush', 'Royal Flush'])
+
+# Calls upon an excel sheet containing the expected hand rank outcomes according to statistics and adds it to rc_df
+expected_rc_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Ranks')
+rc_df['Expected'] = expected_rc_df.loc['Four of a Kind':'Royal Flush','Expected']
+
+# Generates a bar plot comparing simulated vs. expected hand rank outcomes
+rc_graph = rc_df.plot(kind='bar')
+plt.Axes.tick_params(self=rc_graph, axis='x', labelsize=10, labelrotation=45)
+plt.ylabel('Number of times drawn', fontsize=12)
+plt.xlabel('Rank', fontsize=12)
+plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
+plt.show()
 
 #%% Working with the data (card occurrence)
-import plotly as py
-import plotly.graph_objs as go
-import seaborn as sns
 
-# Counts resultant card occurences (cc)
-c1c = Counter(poker_hands_df['Card 1'])
-c2c = Counter(poker_hands_df['Card 2'])
-c3c = Counter(poker_hands_df['Card 3'])
-c4c = Counter(poker_hands_df['Card 4'])
-c5c = Counter(poker_hands_df['Card 5'])
-Card_counts = c1c+c2c+c3c+c4c+c5c
+# Counts resultant card occurrences (co)
+c1o = Counter(poker_hands_df['Card 1'])
+c2o = Counter(poker_hands_df['Card 2'])
+c3o = Counter(poker_hands_df['Card 3'])
+c4o = Counter(poker_hands_df['Card 4'])
+c5o = Counter(poker_hands_df['Card 5'])
+Card_counts = c1o+c2o+c3o+c4o+c5o
 
 # 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',
 # 3) and re-orders the index in ascending card value for use in later plotting applications
-cc_total_df = pd.DataFrame.from_dict(Card_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).sort_index()
-cc_total_df
-
+co_total_df = pd.DataFrame.from_dict(Card_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).sort_index()
 
 # Calls upon an excel sheet containing the expected hand rank outcomes according to statistics and adds it to cc_total_df
-expected_cc_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Cards')
-cc_total_df['Expected'] = expected_cc_df.loc[:,'Expected']
+expected_co_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Cards')
+co_total_df['Expected'] = expected_co_df.loc[:,'Expected']
 
-cc_total_df.plot(kind='bar')
-plt.ylabel('Number of times drawn')
-plt.xlabel('Card')
-plt.title('Card Occurrence in a 52-card deck')
+import matplotlib
+co_graph = co_total_df.plot(kind='bar')
+
+plt.Axes.tick_params(self=co_graph, axis='x', labelsize=8, labelrotation=90)
+plt.ylabel('Number of times drawn', fontsize=12)
+plt.xlabel('Card', fontsize=12)
+plt.title('Card Occurrence in a 52-card deck', fontsize=14)
+
 
 plt.show()
 
