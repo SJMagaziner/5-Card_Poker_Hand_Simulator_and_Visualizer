@@ -5,7 +5,6 @@ import datetime
 import pandas as pd
 from collections import Counter
 import matplotlib.pyplot as plt
-import plotly as py
 
 #%% Global variables and definitions
 
@@ -17,7 +16,7 @@ Value_list = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
 # Making a deck using lists instead of new class functions
 deck2 = [[v + s] for s in Suit_list for v in Value_list]
 
-# This dictionary is used to pull from the card call the values of each assigned and suit for use in hand determination
+# These dictionaries are used to pull from the card call the values of each assigned and suit for use in hand determination
 rank_dictionary = {
         '2': 1,
         '3': 2,
@@ -56,25 +55,25 @@ def what_is_the_hand_rank():
             These hands can be further differentiated by whether the 1st and 4th or 2nd and 5th cards have == values
             If they do, they must be four of a kind, if not, they must be full houses
     The default rank is a high card; Elif statements alter this variable if the proper conditions are met'''
-    hand_rank = "High Card!"
+    hand_rank = "High Card"
     if len(set(hs)) == 1 and hv == [13, 12, 11, 10, 9]:
-        hand_rank = 'Royal Flush!'
+        hand_rank = 'Royal Flush'
     elif len(set(hs)) == 1 and (hv[0] == hv[4] + 4 or hv == [13, 4, 3, 2, 1]):
-        hand_rank = 'Straight Flush!'
+        hand_rank = 'Straight Flush'
     elif len(set(hv)) == 2 and (hv[0] == hv[3] or hv[1] == hv[4]):
-        hand_rank = 'Four of a Kind!'
+        hand_rank = 'Four of a Kind'
     elif len(set(hv)) == 2:
-        hand_rank = 'Full House!'
+        hand_rank = 'Full House'
     elif len(set(hs)) == 1:
-        hand_rank = 'Flush!'
+        hand_rank = 'Flush'
     elif (hv[0] == hv[4] + 4 and len(set(hv)) == 5) or hv == [13, 4, 3, 2, 1]:
-        hand_rank = 'Straight!'
+        hand_rank = 'Straight'
     elif len(set(hv)) == 3 and (hv[0] == hv[2] or hv[2] == hv[4]):
-        hand_rank = 'Three of a Kind!'
+        hand_rank = 'Three of a Kind'
     elif len(set(hv)) == 3:
-        hand_rank = 'Two Pair!'
+        hand_rank = 'Two Pair'
     elif len(set(hv)) == 4:
-        hand_rank = 'Pair!'
+        hand_rank = 'Pair'
     return hand_rank
 
 def make_poker_hand_images():
@@ -120,7 +119,7 @@ def make_poker_hand_images():
 #%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
 
 # Enter the number of hands you desire to generate
-how_many_hands = 100000
+how_many_hands = 10000
 
 # Do you want images to appear for each hand (if yes, input 1, if false input 0?
 #### TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
@@ -195,16 +194,24 @@ for i in range(how_many_hands):
 
 # Lastly, this will store the dataframe as an excel sheet entitled 'Poker Statistics'
 # While the variable final_df will be the appropriate, complete dataframe, this ensures the data is saved
-with pd.ExcelWriter('Poker Hand Statistics 100k.xlsx') as writer:
+with pd.ExcelWriter('Poker Hand Statistics 10k.xlsx') as writer:
     poker_hands_df.to_excel(writer, sheet_name='Sheet1')
 print(poker_hands_df)
 
 #%% Working with the data (hand ranks)
 
+# Counts resultant hand ranks counts (rc)
 Rank_counts = Counter(poker_hands_df['Hand Rank'])
 
-rc_df = pd.DataFrame.from_dict(Rank_counts, orient='index')
-rc_df
+# 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',
+# 3) and re-orders the index in ascending hand rank for use in later plotting applications
+rc_df = pd.DataFrame.from_dict(Rank_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).reindex(['High Card', 'Pair', 'Two Pair', 'Three of a Kind', 'Straight', 'Flush', 'Full House', 'Four of a Kind', 'Straight Flush', 'Royal Flush'])
+
+# Calls upon an excel sheet containing the expected hand rank outcomes according to statistics and adds it to rc_df
+expected_rc_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Ranks')
+rc_df['Expected'] = expected_rc_df.loc[:,'Expected']
+
+# Generates a bar plot comparing simulated vs. expected hand rank outcomes
 rc_df.plot(kind='bar')
 plt.show()
 
@@ -214,17 +221,25 @@ import plotly as py
 import plotly.graph_objs as go
 import seaborn as sns
 
+# Counts resultant card occurences (cc)
 c1c = Counter(poker_hands_df['Card 1'])
 c2c = Counter(poker_hands_df['Card 2'])
 c3c = Counter(poker_hands_df['Card 3'])
 c4c = Counter(poker_hands_df['Card 4'])
 c5c = Counter(poker_hands_df['Card 5'])
-
 Card_counts = c1c+c2c+c3c+c4c+c5c
 
-cc_total_df = pd.DataFrame.from_dict(Card_counts, orient='index').sort_index()
+# 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',
+# 3) and re-orders the index in ascending card value for use in later plotting applications
+cc_total_df = pd.DataFrame.from_dict(Card_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).sort_index()
+cc_total_df
 
-cc_total_df.plot(kind='bar', legend=False)
+
+# Calls upon an excel sheet containing the expected hand rank outcomes according to statistics and adds it to cc_total_df
+expected_cc_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Cards')
+cc_total_df['Expected'] = expected_cc_df.loc[:,'Expected']
+
+cc_total_df.plot(kind='bar')
 plt.ylabel('Number of times drawn')
 plt.xlabel('Card')
 plt.title('Card Occurrence in a 52-card deck')
@@ -234,5 +249,8 @@ plt.show()
 #%% Card correlations
 
 test1 = poker_hands_df.drop(['Hand Rank', 'Time to completion'], axis=1)
-test1
-test1.corr('pearson')
+
+
+## TO do:
+# 1) Add expected outcome dataframe for comparison in bar charts
+# 2) Make slides of project
