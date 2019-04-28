@@ -21,9 +21,9 @@
     
 ### Elements Built and Repo Organization
 #### The most important file is 'Putting_it_all_together-Poker_Hand_Sim_and_Visualizer.py' as this combines every single element described below.  However this repository contains several .py files, pulled apart so as to more easily access, analyze, and reuse any code of interest pertaining to each aspect of this project.
-#### 1) Imports.py
+#### 1) Program_components/Imports.py
 ##### This contains all the required packages and imports
-#### 2) Global_variables.py
+#### 2) Program_components/Global_variables.py
 ##### This script contains the lists and dictionaries used to build a standard 52-card deck.
     
     # 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades
@@ -57,7 +57,7 @@
             'C': 1
             }
             
-#### 3) Functions.py
+#### 3) Program_components/Functions.py
 ##### Possesses the definitions for several key functions including those for a) drawing a random 5-card hand, b) sorting and calling a given hands hand values (hv) and hand suit values (hs), c) a function for defining a given 5-card poker hands rank (pair, flush, etc.), and d) the function to generate an image/visual representation of the hand drawn.
 
 ##### Example below: Function for defining hand rank
@@ -91,7 +91,7 @@
             hand_rank = 'Pair'
         return hand_rank
         
-#### 4) Main_program.py
+#### 4) Program_components/Main_program.py
 ##### Possesses the primary program which utilizes the previous described function.  This main program iteratively generates random hands, ranks them, sorts them, marks the hand-draw time, stores them within a dataframe to be saved to an excel sheet, and, if prompted, generates an image of each hand drawn.
 ##### Below is the main program
 
@@ -162,7 +162,7 @@
         print(poker_hands_df)
 
 
-#### 5) Graphing_functions.py
+#### 5) Program_components/Graphing_functions.py
 ##### Utilizes the data employed to generate figures based on simulated hand data
 #### 6) Data
 ##### Acts as the storage point for expected hand outcome information, contains data on 1 million poker hands simulated by this program, and is the storage point for any newly recorded hand data.
