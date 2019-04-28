@@ -9,6 +9,16 @@
 
 ![Alt Text](Figures/Example_poker_hand.png)
 
+##### Below are the main arguments that must be provided within the code: how_many_hands (currently set to 5) and if you wish poker hand images to appear for each hand (currently set to True). 
+    #%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
+
+    # Enter the number of hands you desire to generate
+    how_many_hands = 5
+
+    # Do you want images to appear for each hand (if yes, input 1, if false input 0?
+    #### TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
+    make_images_appear = True
+    
 ### Elements Built and Repo Organization
 #### The most important file is 'Putting_it_all_together-Poker_Hand_Sim_and_Visualizer.py' as this combines every single element described below.  However this repository contains several .py files, pulled apart so as to more easily access, analyze, and reuse any code of interest pertaining to each aspect of this project.
 #### 1) Imports.py
