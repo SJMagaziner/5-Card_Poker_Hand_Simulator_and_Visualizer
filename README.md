@@ -29,9 +29,9 @@
 
 ### Putting it together-Results
 ##### As can be seen from the below figures, this hand simulator generates outcomes well within the expected margins.  
-##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Figures/Figures/Hand_Rank_Outcomes_(High_Card_to_Royal_Flush).tif)
-##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Figures/Figures/Figures/Hand_Rank_Outcomes_(Straight_to_Royal_Flush).tif)
-##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Figures/Figures/Figures/Hand_Rank_Outcomes_(Straight_Flush_to_Royal_Flush).tif)
-##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Figures/Figures/Figures/Card_Occurrence.tif)
-##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Figures/Figures/Figures/Hands_drawn_over_time.tif)
-##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Figures/Figures/Figures/Effects_of_generating_image.tif)
+##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Hand_Rank_Outcomes_(High_Card_to_Royal_Flush).tif)
+##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figure/Hand_Rank_Outcomes_(Straight_to_Royal_Flush).tif)
+##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Hand_Rank_Outcomes_(Straight_Flush_to_Royal_Flush).tif)
+##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Card_Occurrence.tif)
+##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Hands_drawn_over_time.tif)
+##### ![alt text](https://github.com/SJMagaziner/Python_Final_Project/tree/master/Figures/Effects_of_generating_image.tif)
