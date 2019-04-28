@@ -154,12 +154,12 @@
         if make_images_appear == 1:
             make_poker_hand_images()
 
-# Lastly, this will store the dataframe as an excel sheet entitled 'Poker Statistics'
-# While the variable poker_hands_df will be the appropriate, complete dataframe, this ensures the data is saved
-if how_many_hands == hand_counter:
-    with pd.ExcelWriter('Data/Poker Hand Statistics.xlsx') as writer:
-        poker_hands_df.to_excel(writer, sheet_name='Sheet1')
-    print(poker_hands_df)
+    # Lastly, this will store the dataframe as an excel sheet entitled 'Poker Statistics'
+    # While the variable poker_hands_df will be the appropriate, complete dataframe, this ensures the data is saved
+    if how_many_hands == hand_counter:
+        with pd.ExcelWriter('Data/Poker Hand Statistics.xlsx') as writer:
+            poker_hands_df.to_excel(writer, sheet_name='Sheet1')
+        print(poker_hands_df)
 
 
 #### 5) Graphing_functions.py
