@@ -6,6 +6,8 @@
 ##### As we can statistically model the theoretical outcomes of any number 5-card poker hands (rank occurrence, card occurrence, etc.), this software was used to simulate 1 million 5-card hands, comparing them to the expected outcomes and graphing the results.
 ##### In addition, looking at text versions of poker hands is fairly unsatisfying.  Thus a large (probably too large) endeavor of this project was to build a hand visualizer, an ability to generate real time images of the hands being simulated within the console.  This was successful.
 
+![Alt Text](Figures/Example_poker_hand.png)
+
 ### Elements Built and Repo Organization
 #### The most important file is 'Putting_it_all_together-Poker_Hand_Sim_and_Visualizer.py' as this combines every single element described below.  However this repository contains several .py files, pulled apart so as to more easily access, analyze, and reuse any code of interest pertaining to each aspect of this project.
 #### 1) Imports.py

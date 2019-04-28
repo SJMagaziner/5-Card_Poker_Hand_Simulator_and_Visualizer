@@ -156,7 +156,7 @@ def make_poker_hand_images():
 #%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
 
 # Enter the number of hands you desire to generate
-how_many_hands = 3
+how_many_hands = 5
 
 # Do you want images to appear for each hand (if yes, input 1, if false input 0?
 #### TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
