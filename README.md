@@ -171,7 +171,7 @@
 #### 8) Figures
 ##### Storage point for figures generated in this study (and for any future figures generated with this code)
 #### 9) Putting_it_all_together-Poker_Hand_Sim_and_Visualizer.py
-##### Combines all of the above elements into one comprehensive script
+##### Combines all of the above elements into one comprehensive script.
 
 ### Putting it together-Results
 ##### As can be seen from the below figures, this hand simulator generates outcomes well within the expected margins.  
