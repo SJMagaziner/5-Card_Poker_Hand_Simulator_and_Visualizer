@@ -304,7 +304,7 @@ plt.tight_layout()
 plt.savefig('Figures/Hand Rank Outcomes (Straight Flush to Royal Flush).tif', dpi='figure')
 plt.show()
 
-# %%Working with the data (card occurrence)
+# Working with the data (card occurrence)
 #
 #
 #
@@ -334,7 +334,7 @@ plt.tight_layout()
 plt.savefig('Figures/Card_Occurrence.tif', dpi='figure')
 plt.show()
 
-#%% Hands Drawn vs Time to completion (1 mil)
+# Hands Drawn vs Time to completion (1 mil)
 #
 #
 #
