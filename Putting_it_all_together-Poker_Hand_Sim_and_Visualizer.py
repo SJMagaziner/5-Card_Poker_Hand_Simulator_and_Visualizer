@@ -158,7 +158,7 @@ def make_poker_hand_images():
 # Enter the number of hands you desire to generate
 how_many_hands = 5
 
-# Do you want images to appear for each hand (if yes, input 1, if false input 0?
+# Do you want images to appear for each hand (if yes, input 1 or True, if no input 0 or False)?
 #### TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
 make_images_appear = True
 
