@@ -1,4 +1,4 @@
-#%% Imports
+#%% Imports.
 import random
 from PIL import Image
 import datetime

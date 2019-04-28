@@ -1,4 +1,4 @@
-#%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
+#%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler.
 
 # Enter the number of hands you desire to generate
 how_many_hands = 5

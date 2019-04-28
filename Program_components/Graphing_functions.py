@@ -3,7 +3,7 @@
 #
 #
 
-# Counts resultant hand ranks counts (rc)
+# Counts resultant hand ranks counts (rc).
 Rank_counts = Counter(million_hand_df['Hand Rank'])
 
 # 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',

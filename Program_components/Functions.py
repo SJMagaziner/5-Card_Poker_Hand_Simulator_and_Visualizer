@@ -2,7 +2,7 @@
 
 def draw_a_hand():
     '''This function draws a random sample of 5 cards from the defined deck; each sample is unique
-    and selected at random'''
+    and selected at random.'''
     random_hand = random.sample(deck2, 5)
     return random_hand
 

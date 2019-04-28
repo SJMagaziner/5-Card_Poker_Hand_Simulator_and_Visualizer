@@ -1,6 +1,6 @@
 #%% Global variables and definitions
 
-# 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades
+# 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades.
 Suit_list = ['C', 'D', 'H', 'S']
 # Numeric corresponds to rank with 'T' for 10, 'J' for Jack, 'Q' for Queen, 'K' for King, and 'A' for Ace
 Value_list = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']

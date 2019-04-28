@@ -150,7 +150,7 @@ def make_poker_hand_images():
     hand.paste(im=card4, box=(width1 + width2 + width3, 0))
     hand.paste(im=card5, box=(width1 + width2 + width3 + width4, 0))
 
-    # Function to show the newly made image
+    # Function to show the newly made image.
     Image._show(hand)
 
 #%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
