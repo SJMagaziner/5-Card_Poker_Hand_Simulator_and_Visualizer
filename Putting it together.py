@@ -6,6 +6,7 @@ import pandas as pd
 from collections import Counter
 import matplotlib.pyplot as plt
 
+
 #%% Global variables and definitions
 
 # 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades
@@ -45,6 +46,34 @@ def draw_a_hand():
     and selected at random'''
     random_hand = random.sample(deck2, 5)
     return random_hand
+
+def check_hand_values_and_suits():
+    ''''Looks hand rank and suit values in dictionaries. Arranges the called values into a list of ints;
+    .sort with reverse=True sorts in descending numerical order
+        # E.g. a hand of [K,5,A,T,J] is sorted into [A,K,J,T,5]; same applies for suits
+        # For brevity, hs and hv stand for "Hand suits" and "Hand values", respectively'''
+    # Looks up rank values in dictionary (e.g. cdv1 is card 1's rank; A corresponds to 13, King to 12, etc.)
+    cdv1 = rank_dictionary[(str((sorted_hand[0]))[2:3])]
+    cdv2 = rank_dictionary[(str((sorted_hand[1]))[2:3])]
+    cdv3 = rank_dictionary[(str((sorted_hand[2]))[2:3])]
+    cdv4 = rank_dictionary[(str((sorted_hand[3]))[2:3])]
+    cdv5 = rank_dictionary[str((sorted_hand[4]))[2:3]]
+
+    # Looks up suit values in dictionary (e.g. cds1 is card 1's suit; Spades corresponds to 4, etc.)
+    cds1 = suit_dictionary[(str((sorted_hand[0]))[3:4])]
+    cds2 = suit_dictionary[(str((sorted_hand[1]))[3:4])]
+    cds3 = suit_dictionary[(str((sorted_hand[2]))[3:4])]
+    cds4 = suit_dictionary[(str((sorted_hand[3]))[3:4])]
+    cds5 = suit_dictionary[str((sorted_hand[4]))[3:4]]
+
+    # Arranges the called values into a list of ints; .sort with reverse=True sorts in descending numerical order
+    # E.g. a hand of [K,5,A,T,J] is sorted into [A,K,J,T,5]; same applies for suits
+    # For brevity, hs and hv stand for "Hand suits" and "Hand values", respectively
+    hs = [cds1, cds2, cds3, cds4, cds5]
+    hs.sort(reverse=True)
+    hv = [cdv1, cdv2, cdv3, cdv4, cdv5]
+    hv.sort(reverse=True)
+    return hs, hv
 
 def what_is_the_hand_rank():
     '''Defines hand ranks; the len(set(hs)) and len(set(hv)) functions look for unique values in the hv or hs lists
@@ -119,11 +148,11 @@ def make_poker_hand_images():
 #%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
 
 # Enter the number of hands you desire to generate
-how_many_hands = 100000
+how_many_hands = 100
 
 # Do you want images to appear for each hand (if yes, input 1, if false input 0?
 #### TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
-make_images_appear = 0
+make_images_appear = False
 
 # Generates empty pandas dataframe onto which we will append info from each hand
 poker_hands_df = pd.DataFrame()
@@ -142,28 +171,11 @@ for i in range(how_many_hands):
     # This draws one's unique 5-card hand and sorts it, grouping like cards
     random_hand = draw_a_hand()
     sorted_hand = sorted(random_hand)
+    print(sorted_hand)
 
-    # Looks up rank values in dictionary (e.g. cdv1 is card 1's rank; A corresponds to 13, King to 12, etc.)
-    cdv1 = rank_dictionary[(str((sorted_hand[0]))[2:3])]
-    cdv2 = rank_dictionary[(str((sorted_hand[1]))[2:3])]
-    cdv3 = rank_dictionary[(str((sorted_hand[2]))[2:3])]
-    cdv4 = rank_dictionary[(str((sorted_hand[3]))[2:3])]
-    cdv5 = rank_dictionary[str((sorted_hand[4]))[2:3]]
-
-    # Looks up suit values in dictionary (e.g. cds1 is card 1's suit; Spades corresponds to 4, etc.)
-    cds1 = suit_dictionary[(str((sorted_hand[0]))[3:4])]
-    cds2 = suit_dictionary[(str((sorted_hand[1]))[3:4])]
-    cds3 = suit_dictionary[(str((sorted_hand[2]))[3:4])]
-    cds4 = suit_dictionary[(str((sorted_hand[3]))[3:4])]
-    cds5 = suit_dictionary[str((sorted_hand[4]))[3:4]]
-
-    # Arranges the called values into a list of ints; .sort with reverse=True sorts in descending numerical order
-        # E.g. a hand of [K,5,A,T,J] is sorted into [A,K,J,T,5]; same applies for suits
-    # For brevity, hs and hv stand for "Hand suits" and "Hand values", respectively
-    hs = [cds1, cds2, cds3, cds4, cds5]
-    hs.sort(reverse=True)
-    hv = [cdv1, cdv2, cdv3, cdv4, cdv5]
-    hv.sort(reverse=True)
+    # Pulls hand values and suits for use in rank checking, see function documentation for detailed explanation
+    hs = check_hand_values_and_suits()[0]
+    hv = check_hand_values_and_suits()[1]
 
     # Defines hand ranks; see function documentation for detailed explanation
     hand_rank = what_is_the_hand_rank()
@@ -193,79 +205,95 @@ for i in range(how_many_hands):
 
 # Lastly, this will store the dataframe as an excel sheet entitled 'Poker Statistics'
 # While the variable poker_hands_df will be the appropriate, complete dataframe, this ensures the data is saved
-with pd.ExcelWriter('Poker Hand Statistics 1mil.xlsx') as writer:
-    poker_hands_df.to_excel(writer, sheet_name='Sheet1')
-print(poker_hands_df)
+if how_many_hands == hand_counter:
+    with pd.ExcelWriter('Data/Poker Hand Statistics.xlsx') as writer:
+        poker_hands_df.to_excel(writer, sheet_name='Sheet1')
+    print(poker_hands_df)
 
-#%% Working with the data (hand ranks)
+#%% Working with the data(all hand ranks)
+#
+#
+#
+
+# Builds two dataframes (rank count [rc] and card occurrence [co] from an existing data set)
+expected_rc_df = pd.read_excel('Data/Expected poker hand outcomes.xlsx', sheet_name='Ranks')
+expected_co_df = pd.read_excel('Data/Expected poker hand outcomes.xlsx', sheet_name='Cards')
+
+# Builds a dataframe from an existing sample of 1 million poker hands simulated using this code
+million_hand_df = pd.read_excel('Data/Poker Hand Statistics 1mil.xlsx')
 
 # Counts resultant hand ranks counts (rc)
-Rank_counts = Counter(poker_hands_df['Hand Rank'])
+Rank_counts = Counter(million_hand_df['Hand Rank'])
 
 # 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',
 # 3) and re-orders the index in ascending hand rank for use in later plotting applications
-rc_df = pd.DataFrame.from_dict(Rank_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).reindex(['High Card', 'Pair', 'Two Pair', 'Three of a Kind', 'Straight', 'Flush', 'Full House', 'Four of a Kind', 'Straight Flush', 'Royal Flush'])
+rc_all_df = pd.DataFrame.from_dict(Rank_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).reindex(['High Card', 'Pair', 'Two Pair', 'Three of a Kind', 'Straight', 'Flush', 'Full House', 'Four of a Kind','Straight Flush', 'Royal Flush'])
 
 # Calls upon an excel sheet containing the expected hand rank outcomes according to statistics and adds it to rc_df
-expected_rc_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Ranks')
-rc_df['Expected'] = expected_rc_df.loc[:,'Expected']
+rc_all_df['Expected'] = expected_rc_df.loc[:,'Expected']
 
-# Generates a bar plot comparing simulated vs. expected hand rank outcomes
-rc_graph = rc_df.plot(kind='bar')
-plt.Axes.tick_params(self=rc_graph, axis='x', labelsize=10, labelrotation=45)
+# Generates a bar plot comparing simulated vs. expected hand rank outcomes (all)
+rc_graph1 = rc_all_df.plot(kind='bar')
+plt.Axes.tick_params(self=rc_graph1, axis='x', labelsize=10, labelrotation=45)
 plt.ylabel('Number of times drawn', fontsize=12)
 plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
+plt.grid(True)
 plt.show()
 
 #%% Zoomed in look at hand ranks (Straight to Royal)
-# Counts resultant hand ranks counts (rc)
-Rank_counts = Counter(poker_hands_df['Hand Rank'])
+#
+#
+#
 
 # 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',
 # 3) and re-orders the index in ascending hand rank for use in later plotting applications
-rc_df = pd.DataFrame.from_dict(Rank_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).reindex(['Straight', 'Flush', 'Full House', 'Four of a Kind', 'Straight Flush', 'Royal Flush'])
+rc_straight_to_royal_df = pd.DataFrame.from_dict(Rank_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).reindex(['Straight', 'Flush', 'Full House', 'Four of a Kind', 'Straight Flush', 'Royal Flush'])
 
 # Calls upon an excel sheet containing the expected hand rank outcomes according to statistics and adds it to rc_df
-expected_rc_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Ranks')
-rc_df['Expected'] = expected_rc_df.loc['Straight':'Royal Flush','Expected']
+rc_straight_to_royal_df['Expected'] = expected_rc_df.loc['Straight':'Royal Flush','Expected']
 
-# Generates a bar plot comparing simulated vs. expected hand rank outcomes
-rc_graph = rc_df.plot(kind='bar')
-plt.Axes.tick_params(self=rc_graph, axis='x', labelsize=10, labelrotation=45)
+# Generates a bar plot comparing simulated vs. expected hand rank outcomes (Straight to Royal)
+rc_graph2 = rc_straight_to_royal_df.plot(kind='bar')
+plt.Axes.tick_params(self=rc_graph2, axis='x', labelsize=10, labelrotation=45)
 plt.ylabel('Number of times drawn', fontsize=12)
 plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
+plt.grid(True)
 plt.show()
 
-#%% Zoomed in look at hand ranks (Four of a Kind to Royal)
-# Counts resultant hand ranks counts (rc)
-Rank_counts = Counter(poker_hands_df['Hand Rank'])
+#%% Zoomed in look at hand ranks (Straight Flush to Royal)
+#
+#
+#
 
 # 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',
 # 3) and re-orders the index in ascending hand rank for use in later plotting applications
-rc_df = pd.DataFrame.from_dict(Rank_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).reindex(['Four of a Kind', 'Straight Flush', 'Royal Flush'])
+rc_sflush_to_royal_df = pd.DataFrame.from_dict(Rank_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).reindex(['Straight Flush', 'Royal Flush'])
 
 # Calls upon an excel sheet containing the expected hand rank outcomes according to statistics and adds it to rc_df
-expected_rc_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Ranks')
-rc_df['Expected'] = expected_rc_df.loc['Four of a Kind':'Royal Flush','Expected']
+rc_sflush_to_royal_df['Expected'] = expected_rc_df.loc['Straight Flush':'Royal Flush','Expected']
 
-# Generates a bar plot comparing simulated vs. expected hand rank outcomes
-rc_graph = rc_df.plot(kind='bar')
-plt.Axes.tick_params(self=rc_graph, axis='x', labelsize=10, labelrotation=45)
+# Generates a bar plot comparing simulated vs. expected hand rank outcomes (Straight Flush to Royal)
+rc_graph3 = rc_sflush_to_royal_df.plot(kind='bar')
+plt.Axes.tick_params(self=rc_graph3, axis='x', labelsize=10, labelrotation=45)
 plt.ylabel('Number of times drawn', fontsize=12)
 plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
+plt.grid(True)
 plt.show()
 
 #%% Working with the data (card occurrence)
+#
+#
+#
 
 # Counts resultant card occurrences (co)
-c1o = Counter(poker_hands_df['Card 1'])
-c2o = Counter(poker_hands_df['Card 2'])
-c3o = Counter(poker_hands_df['Card 3'])
-c4o = Counter(poker_hands_df['Card 4'])
-c5o = Counter(poker_hands_df['Card 5'])
+c1o = Counter(million_hand_df['Card 1'])
+c2o = Counter(million_hand_df['Card 2'])
+c3o = Counter(million_hand_df['Card 3'])
+c4o = Counter(million_hand_df['Card 4'])
+c5o = Counter(million_hand_df['Card 5'])
 Card_counts = c1o+c2o+c3o+c4o+c5o
 
 # 1) Generates a new dataframe based on previous count, 2) Renames the column default column name of 0 to 'Simulated',
@@ -273,25 +301,49 @@ Card_counts = c1o+c2o+c3o+c4o+c5o
 co_total_df = pd.DataFrame.from_dict(Card_counts, orient='index').rename(index=str, columns={0: 'Simulated'}).sort_index()
 
 # Calls upon an excel sheet containing the expected hand rank outcomes according to statistics and adds it to cc_total_df
-expected_co_df = pd.read_excel('Expected poker hand outcomes.xlsx', sheet_name='Cards')
 co_total_df['Expected'] = expected_co_df.loc[:,'Expected']
 
-import matplotlib
+# Generates bargraph
 co_graph = co_total_df.plot(kind='bar')
-
 plt.Axes.tick_params(self=co_graph, axis='x', labelsize=8, labelrotation=90)
 plt.ylabel('Number of times drawn', fontsize=12)
 plt.xlabel('Card', fontsize=12)
 plt.title('Card Occurrence in a 52-card deck', fontsize=14)
-
-
 plt.show()
 
-#%% Card correlations
+#%% Hands Drawn vs Time to completion (1 mil)
+#
+#
+#
 
-test1 = poker_hands_df.drop(['Hand Rank', 'Time to completion'], axis=1)
+mil_time_course = {'Hand #': [1, 10, 100, 1000, 10000, 50000, 100000, 250000, 500000, 750000, 1000000],
+                'Time (hrs)': [0, .0000083 , .0001222, .001219, .013675, .131519, .4569344, 2.46253, 9.35619, 20.3511, 35.2033]}
+
+mil_time_course_df = pd.DataFrame(data=mil_time_course)
+
+plt.plot(mil_time_course_df['Time (hrs)'], mil_time_course_df['Hand #'])
+plt.ylabel('Hand #', fontsize=12)
+plt.xlabel('Time (hrs)', fontsize=12)
+plt.title('Poker Hand Simulator: Runtime vs. Hand #', fontsize=14)
+plt.grid(True)
+plt.show()
 
 
-## TO do:
-# 1) Add expected outcome dataframe for comparison in bar charts
-# 2) Make slides of project
+#%% Hands drawn time comparison of with image and without
+#
+#
+#
+
+hand_num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+with_image = [0.00000, 3.859634, 6.07011, 8.167023, 10.159657, 12.161241, 14.158741, 16.168040, 18.141908, 20.148223]
+without_image = [0.00000, 0.00725, 0.015625, 0.015625, 0.015625, 0.031243, 0.031243, 0.031243, 0.046864, 0.046864]
+
+plt.plot(with_image, hand_num, color='blue', label='With Image')
+plt.plot(without_image, hand_num, color='orange', label='Without Image')
+
+plt.legend()
+plt.ylabel('Hand #', fontsize=12)
+plt.xlabel('Time (sec)', fontsize=12)
+plt.title('Poker Hand Simulator: Runtime vs. Hand #', fontsize=14)
+
+plt.show()
