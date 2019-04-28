@@ -1,11 +1,11 @@
 #%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
 
 # Enter the number of hands you desire to generate
-how_many_hands = 100
+how_many_hands = 5
 
 # Do you want images to appear for each hand (if yes, input 1, if false input 0?
 #### TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
-make_images_appear = False
+make_images_appear = True
 
 # Generates empty pandas dataframe onto which we will append info from each hand
 poker_hands_df = pd.DataFrame()
