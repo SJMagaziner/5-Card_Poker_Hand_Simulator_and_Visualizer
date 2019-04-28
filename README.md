@@ -38,8 +38,6 @@
 
 ![Alt Text](/Figures/Card_Occurrence.png)
 
-![Alt Text](Figures/Card_Occurrence.png)
-
 ![Alt Text](Figures/Hands_drawn_over_time.png)
 
 ![Alt Text](Figures/Effects_of_generating_image.png)
