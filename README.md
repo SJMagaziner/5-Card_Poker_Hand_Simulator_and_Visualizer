@@ -30,8 +30,7 @@
 ### Putting it together-Results
 ##### As can be seen from the below figures, this hand simulator generates outcomes well within the expected margins.  
 ##### 
-<p align="center">
-<img src="Figures/Hand_Rank_Outcomes_(High_Card_to_Royal_Flush).png">
+![Test](/Figures/Hand_Rank_Outcomes_(High_Card_to_Royal_Flush).png)
 <img src="Figure/Hand_Rank_Outcomes_(Straight_to_Royal_Flush).png">
 <img src="Figures/Hand_Rank_Outcomes_(Straight_Flush_to_Royal_Flush).png">
 <img src="Figures/Card_Occurrence.png">
