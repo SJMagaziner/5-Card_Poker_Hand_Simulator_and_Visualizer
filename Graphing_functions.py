@@ -28,8 +28,9 @@ plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.grid(True)
 plt.show()
+plt.savefig('Figures/Hand Rank Outcomes (High Card to Royal Flush)')
 
-# Zoomed in look at hand ranks (Straight to Royal)
+# %% Zoomed in look at hand ranks (Straight to Royal)
 #
 #
 #
@@ -49,8 +50,9 @@ plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.grid(True)
 plt.show()
+plt.savefig('Figures/Hand Rank Outcomes (Straight to Royal Flush)')
 
-# Zoomed in look at hand ranks (Straight Flush to Royal)
+#%% Zoomed in look at hand ranks (Straight Flush to Royal)
 #
 #
 #
@@ -70,6 +72,7 @@ plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.grid(True)
 plt.show()
+plt.savefig('Figures/Hand Rank Outcomes (Straight Flush to Royal Flush)')
 
 # Working with the data (card occurrence)
 #
@@ -98,8 +101,9 @@ plt.ylabel('Number of times drawn', fontsize=12)
 plt.xlabel('Card', fontsize=12)
 plt.title('Card Occurrence in a 52-card deck', fontsize=14)
 plt.show()
+plt.savefig('Figures/Card Occurrence')
 
-# Hands Drawn vs Time to completion (1 mil)
+# %% Hands Drawn vs Time to completion (1 mil)
 #
 #
 #
@@ -115,9 +119,10 @@ plt.xlabel('Time (hrs)', fontsize=12)
 plt.title('Poker Hand Simulator: Runtime vs. Hand #', fontsize=14)
 plt.grid(True)
 plt.show()
+plt.savefig('Figures/Hands Drawn vs. Time)
 
 
-# Hands drawn time comparison of with image and without
+#%% Hands drawn time comparison of with image and without
 #
 #
 #
@@ -133,5 +138,5 @@ plt.legend()
 plt.ylabel('Hand #', fontsize=12)
 plt.xlabel('Time (sec)', fontsize=12)
 plt.title('Poker Hand Simulator: Runtime vs. Hand #', fontsize=14)
-
 plt.show()
+plt.savefig('Figures/Effects of generating image)

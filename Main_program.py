@@ -32,6 +32,7 @@ for i in range(how_many_hands):
 
     # Defines hand ranks; see function documentation for detailed explanation
     hand_rank = what_is_the_hand_rank()
+    print(hand_rank)
 
     # Creates a time stamp for each hand iteration
     current_time = datetime.datetime.now()

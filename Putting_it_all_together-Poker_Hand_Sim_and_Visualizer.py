@@ -1,4 +1,7 @@
 #%% Imports
+#
+#
+#
 import random
 from PIL import Image
 import datetime
@@ -7,8 +10,10 @@ from collections import Counter
 import matplotlib.pyplot as plt
 
 
-#%% Global variables and definitions
-
+# Global variables and definitions
+#
+#
+#
 # 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades
 Suit_list = ['C', 'D', 'H', 'S']
 # Numeric corresponds to rank with 'T' for 10, 'J' for Jack, 'Q' for Queen, 'K' for King, and 'A' for Ace
@@ -39,8 +44,11 @@ suit_dictionary = {
         'D': 2,
         'C': 1
         }
-#%% Functions used in main program
 
+# Functions used in main program
+#
+#
+#
 def draw_a_hand():
     '''This function draws a random sample of 5 cards from the defined deck; each sample is unique
     and selected at random'''
@@ -148,11 +156,11 @@ def make_poker_hand_images():
 #%% MAIN PROGRAM: Auto hand-drawer, visualizer, and data compiler
 
 # Enter the number of hands you desire to generate
-how_many_hands = 100
+how_many_hands = 3
 
 # Do you want images to appear for each hand (if yes, input 1, if false input 0?
 #### TOO MANY HAND IMAGES BEING GENERATED WILL SLOW DOWN YOUR COMPUTER GREATLY
-make_images_appear = False
+make_images_appear = True
 
 # Generates empty pandas dataframe onto which we will append info from each hand
 poker_hands_df = pd.DataFrame()
@@ -179,6 +187,7 @@ for i in range(how_many_hands):
 
     # Defines hand ranks; see function documentation for detailed explanation
     hand_rank = what_is_the_hand_rank()
+    print(hand_rank)
 
     # Creates a time stamp for each hand iteration
     current_time = datetime.datetime.now()
@@ -240,8 +249,9 @@ plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.grid(True)
 plt.show()
+plt.savefig('Figures/Hand Rank Outcomes (High Card to Royal Flush)')
 
-#%% Zoomed in look at hand ranks (Straight to Royal)
+# Zoomed in look at hand ranks (Straight to Royal)
 #
 #
 #
@@ -261,8 +271,9 @@ plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.grid(True)
 plt.show()
+plt.savefig('Figures/Hand Rank Outcomes (Straight to Royal Flush)')
 
-#%% Zoomed in look at hand ranks (Straight Flush to Royal)
+# Zoomed in look at hand ranks (Straight Flush to Royal)
 #
 #
 #
@@ -282,8 +293,9 @@ plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.grid(True)
 plt.show()
+plt.savefig('Figures/Hand Rank Outcomes (Straight Flush to Royal Flush)')
 
-#%% Working with the data (card occurrence)
+# Working with the data (card occurrence)
 #
 #
 #
@@ -310,8 +322,9 @@ plt.ylabel('Number of times drawn', fontsize=12)
 plt.xlabel('Card', fontsize=12)
 plt.title('Card Occurrence in a 52-card deck', fontsize=14)
 plt.show()
+plt.savefig('Figures/Card Occurrence')
 
-#%% Hands Drawn vs Time to completion (1 mil)
+# Hands Drawn vs Time to completion (1 mil)
 #
 #
 #
@@ -327,9 +340,10 @@ plt.xlabel('Time (hrs)', fontsize=12)
 plt.title('Poker Hand Simulator: Runtime vs. Hand #', fontsize=14)
 plt.grid(True)
 plt.show()
+plt.savefig('Figures/Hands Drawn vs. Time)
 
 
-#%% Hands drawn time comparison of with image and without
+# Hands drawn time comparison of with image and without
 #
 #
 #
@@ -345,5 +359,5 @@ plt.legend()
 plt.ylabel('Hand #', fontsize=12)
 plt.xlabel('Time (sec)', fontsize=12)
 plt.title('Poker Hand Simulator: Runtime vs. Hand #', fontsize=14)
-
 plt.show()
+plt.savefig('Figures/Effects of generating image)
