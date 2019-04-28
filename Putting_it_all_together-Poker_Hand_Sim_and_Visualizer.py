@@ -353,7 +353,7 @@ plt.tight_layout()
 plt.savefig('Figures/Hands_drawn_over_time.png', dpi='figure')
 plt.show()
 
-# Hands drawn time comparison of with image and without
+#%% Hands drawn time comparison of with image and without
 #
 #
 #
@@ -368,7 +368,7 @@ plt.plot(without_image, hand_num, color='orange', label='Without Image')
 plt.legend()
 plt.ylabel('Hand #', fontsize=12)
 plt.xlabel('Time (sec)', fontsize=12)
-plt.title('Poker Hand Simulator: Runtime vs. Hand #', fontsize=14)
+plt.title('Poker Hand Simulator: Effects of Generating Images on Runtime', fontsize=14)
 plt.tight_layout()
-plt.savefig('Figures/Effects_of_generating_image.png', dpi='figure')
+plt.savefig('Figures/Effects_of_generating_image1.tif', dpi='figure')
 plt.show()

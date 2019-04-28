@@ -40,4 +40,4 @@
 
 ![Alt Text](Figures/Hands_drawn_over_time.png)
 
-![Alt Text](Figures/Effects_of_generating_image.png)
+![Alt Text](Figures/Effects_of_generating_image1.png)
