@@ -25,8 +25,72 @@
 ##### This contains all the required packages and imports
 #### 2) Global_variables.py
 ##### This script contains the lists and dictionaries used to build a standard 52-card deck.
+    
+    # 'C' are clubs, 'D' are diamonds, 'H' are hearts, 'S' are spades
+    Suit_list = ['C', 'D', 'H', 'S']
+    # Numeric corresponds to rank with 'T' for 10, 'J' for Jack, 'Q' for Queen, 'K' for King, and 'A' for Ace
+    Value_list = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+    
+    # Making a deck using lists instead of new class functions
+    deck2 = [[v + s] for s in Suit_list for v in Value_list]
+    
+    # These dictionaries are used to pull from the card call the values of each assigned and suit for use in hand determination
+    rank_dictionary = {
+            '2': 1,
+            '3': 2,
+            '4': 3,
+            '5': 4,
+            '6': 5,
+            '7': 6,
+            '8': 7,
+            '9': 8,
+            'T': 9,
+            'J': 10,
+            'Q': 11,
+            'K': 12,
+            'A': 13
+            }
+    suit_dictionary = {
+            'S': 4,
+            'H': 3,
+            'D': 2,
+            'C': 1
+            }
+            
 #### 3) Functions.py
 ##### Possesses the definitions for several key functions including those for a) drawing a random 5-card hand, b) sorting and calling a given hands hand values (hv) and hand suit values (hs), c) a function for defining a given 5-card poker hands rank (pair, flush, etc.), and d) the function to generate an image/visual representation of the hand drawn.
+
+##### Example below: Function for defining hand rank
+    def what_is_the_hand_rank():
+        '''Defines hand ranks; the len(set(hs)) and len(set(hv)) functions look for unique values in the hv or hs lists
+        E.g. A flush (all same suit) possesses only one unique suit value, thus len(set(hs)) == 1
+            Since ranks are numbered, other relations appear such as straights always possessing a range of 4
+        Exceptions exist and are noted/coded as appropriate
+            E.g. a hand of len(set(hv)) == 2 can be either [A,A,A,K,K] or [A,A,A,A,K]
+                These hands can be further differentiated by whether the 1st and 4th or 2nd and 5th cards have == values
+                If they do, they must be four of a kind, if not, they must be full houses
+        The default rank is a high card; Elif statements alter this variable if the proper conditions are met'''
+        hand_rank = "High Card"
+        if len(set(hs)) == 1 and hv == [13, 12, 11, 10, 9]:
+            hand_rank = 'Royal Flush'
+        elif len(set(hs)) == 1 and (hv[0] == hv[4] + 4 or hv == [13, 4, 3, 2, 1]):
+            hand_rank = 'Straight Flush'
+        elif len(set(hv)) == 2 and (hv[0] == hv[3] or hv[1] == hv[4]):
+            hand_rank = 'Four of a Kind'
+        elif len(set(hv)) == 2:
+            hand_rank = 'Full House'
+        elif len(set(hs)) == 1:
+            hand_rank = 'Flush'
+        elif (hv[0] == hv[4] + 4 and len(set(hv)) == 5) or hv == [13, 4, 3, 2, 1]:
+            hand_rank = 'Straight'
+        elif len(set(hv)) == 3 and (hv[0] == hv[2] or hv[2] == hv[4]):
+            hand_rank = 'Three of a Kind'
+        elif len(set(hv)) == 3:
+            hand_rank = 'Two Pair'
+        elif len(set(hv)) == 4:
+            hand_rank = 'Pair'
+        return hand_rank
+        
 #### 4) Main_program.py
 ##### Possesses the primary program which utilizes the previous described function.  This main program iteratively generates random hands, ranks them, sorts them, marks the hand-draw time, stores them within a dataframe to be saved to an excel sheet, and, if prompted, generates an image of each hand drawn.
 #### 5) Graphing_functions.py
