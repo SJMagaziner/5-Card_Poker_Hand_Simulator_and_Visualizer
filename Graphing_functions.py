@@ -1,16 +1,3 @@
-#%% Working with the data
-#
-#
-#
-
-# Builds two dataframes (rank count [rc] and card occurrence [co] from an existing data set)
-expected_rc_df = pd.read_excel('Data/Expected poker hand outcomes.xlsx', sheet_name='Ranks')
-expected_co_df = pd.read_excel('Data/Expected poker hand outcomes.xlsx', sheet_name='Cards')
-
-# Builds a dataframe from an existing sample of 1 million poker hands simulated using this code
-# NOTE: THIS CAN TAKE A FEW MINUTES AS IT IS PROCESSING A MASSIVE DATA SET
-million_hand_df = pd.read_excel('Data/Poker Hand Statistics 1mil.xlsx')
-
 #%% Assessing Hand Rank (all ranks)
 #
 #
@@ -34,7 +21,7 @@ plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('Figures/Hand Rank Outcomes (High Card to Royal Flush).tif', dpi='figure')
+plt.savefig('Figures/Hand_Rank_Outcomes_(High_Card_to_Royal_Flush).png', dpi='figure')
 plt.show()
 
 #%% Zoomed in look at hand ranks (Straight to Royal)
@@ -57,7 +44,7 @@ plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('Figures/Hand Rank Outcomes (Straight to Royal Flush).tif', dpi='figure')
+plt.savefig('Figures/Hand_Rank_Outcomes_(Straight_to_Royal_Flush).png', dpi='figure')
 plt.show()
 
 #%% Zoomed in look at hand ranks (Straight Flush to Royal)
@@ -80,7 +67,7 @@ plt.xlabel('Rank', fontsize=12)
 plt.title('Rank Occurrence in 1 Million 5-card Poker Hands', fontsize=14)
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('Figures/Hand Rank Outcomes (Straight Flush to Royal Flush).tif', dpi='figure')
+plt.savefig('Figures/Hand_Rank_Outcomes_(Straight_Flush_to_Royal_Flush).png', dpi='figure')
 plt.show()
 
 #%% Working with the data (card occurrence)
@@ -110,7 +97,7 @@ plt.ylabel('Number of times drawn', fontsize=12)
 plt.xlabel('Card', fontsize=12)
 plt.title('Card Occurrence in a 52-card deck', fontsize=14)
 plt.tight_layout()
-plt.savefig('Figures/Card Occurrence.tif', dpi='figure')
+plt.savefig('Figures/Card_Occurrence.png', dpi='figure')
 plt.show()
 
 #%% Hands Drawn vs Time to completion (1 mil)
@@ -129,7 +116,7 @@ plt.xlabel('Time (hrs)', fontsize=12)
 plt.title('Poker Hand Simulator: Runtime vs. Hand #', fontsize=14)
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('Figures/Hands drawn over time.tif', dpi='figure')
+plt.savefig('Figures/Hands_drawn_over_time.png', dpi='figure')
 plt.show()
 
 #%% Hands drawn time comparison of with image and without
@@ -147,7 +134,8 @@ plt.plot(without_image, hand_num, color='orange', label='Without Image')
 plt.legend()
 plt.ylabel('Hand #', fontsize=12)
 plt.xlabel('Time (sec)', fontsize=12)
-plt.title('Poker Hand Simulator: Runtime vs. Hand #', fontsize=14)
+plt.title('Poker Hand Simulator: Effects of Generating Images on Runtime', fontsize=14)
+plt.grid(True)
 plt.tight_layout()
-plt.savefig('Figures/Effects of generating image.tif', dpi='figure')
+plt.savefig('Figures/Effects_of_generating_image1.png', dpi='figure')
 plt.show()
