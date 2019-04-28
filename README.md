@@ -1,4 +1,5 @@
 # Python Final Project-Samuel J. Magaziner
+## 5-Card Poker Hand Simulator and Visualizer
 
 ### Background
 ##### An often discussed element of computer science is the nature of programmed randomness.  What is "true" randomness?  Are there innate biases constructed when designing inherently ordered algorithms to mimic random events?  This project was developed to perhaps scratch at the surface of these questions.
