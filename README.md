@@ -60,7 +60,14 @@
 #### 3) Program_components/Functions.py
 ##### Possesses the definitions for several key functions including those for a) drawing a random 5-card hand, b) sorting and calling a given hands hand values (hv) and hand suit values (hs), c) a function for defining a given 5-card poker hands rank (pair, flush, etc.), and d) the function to generate an image/visual representation of the hand drawn.
 
-##### Example below: Function for defining hand rank
+##### Function for drawing a random 5-card poker hand:
+    def draw_a_hand():
+        '''This function draws a random sample of 5 cards from the defined deck; each sample is unique
+        and selected at random'''
+        random_hand = random.sample(deck2, 5)
+        return random_hand
+
+##### Function for defining hand rank:
     def what_is_the_hand_rank():
         '''Defines hand ranks; the len(set(hs)) and len(set(hv)) functions look for unique values in the hv or hs lists
         E.g. A flush (all same suit) possesses only one unique suit value, thus len(set(hs)) == 1
